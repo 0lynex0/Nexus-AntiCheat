@@ -8,7 +8,7 @@ ______________________
 
 ______________________
 
-## Nexus-AntiCheat
+**Nexus-AntiCheat**
 QBCore/QBX Core Free AntiCheat. Supported, active development.
 
 ______________________
