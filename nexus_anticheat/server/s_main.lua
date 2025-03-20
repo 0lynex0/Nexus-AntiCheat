@@ -144,17 +144,18 @@ end)
 RegisterServerEvent('nexusac:logInvisiblePlayer')
 AddEventHandler('nexusac:logInvisiblePlayer', function()
     if nexus.debug == true then 
-        print("[ NEXUS AC ] Anticheat has LOGED an INVISIBLE player")
+        print("[ NEXUS AC ] Anticheat has LOGGED an INVISIBLE player")
     end
     local src = source
     local playerName = GetPlayerName(src)
 
-    exports["nexus_anticheat"]:SendLog("detection", {
+    exports["nexus_anticheat"]:SendLog("detection",{
         color = 8454399,
         title = "[ NEXUS AC ] Invisible player detected!",
         description = "**Hráč:** " .. playerName .. "\n" ..
-                      "**ID:** " .. src .. "\n" ..
+                      "**ID:** " .. src,
     })
+
     if nexus.Invisible == true then
         DropPlayer(src, "[NEXUS AC] You have been detected for invisibility!")
     end
