@@ -8,13 +8,14 @@ https://discord.gg/KhgGD32nc2
 ______________________
 
 ## Nexus-AntiCheat
-QBCore Free AntiCheat. Supported, active development.
+QBCore/QBX Core Free AntiCheat. Supported, active development.
 
 ______________________
 
-✅ QBCore detections
+✅ QBCore
+✅ QBX Core
 
-⛔ ESX detections
+⛔ ESX
 
 ______________________
 
