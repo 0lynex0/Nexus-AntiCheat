@@ -2,8 +2,9 @@
 
 ______________________
 
-# Join Nexus services for support, and special releases!
-https://discord.gg/KhgGD32nc2
+#            🎗 Join Nexus Services for support, and special releases! 🎗
+                    [Discord](https://discord.gg/KhgGD32nc2)
+                    We create WEBs, MLOs and Scripts!
 
 ______________________
 
