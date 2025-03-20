@@ -3,7 +3,7 @@
 ______________________
 
 #            🎗 Join Nexus Services for support, and special releases! 🎗
-  [Discord](https://discord.gg/KhgGD32nc2)
+  [Discord](https://discord.gg/KhgGD32nc2) | 
   We create WEBs, MLOs and Scripts!
 
 ______________________
