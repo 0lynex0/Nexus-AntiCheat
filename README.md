@@ -2,7 +2,7 @@
 
 ______________________
 
-# Nexus services
+# Join Nexus services for support, and special releases!
 https://discord.gg/KhgGD32nc2
 
 ______________________
