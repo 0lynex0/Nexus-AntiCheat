@@ -1,4 +1,4 @@
-# DOWNLOAD LATEST [RELEASE](https://github.com/Muffinzo/muffin-simplelogs/releases)
+# DOWNLOAD LATEST [RELEASE](https://github.com/Muffinzo/Nexus-AntiCheat/releases)
 
 ______________________
 
