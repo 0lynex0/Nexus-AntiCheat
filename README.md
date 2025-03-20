@@ -7,7 +7,7 @@ https://discord.gg/KhgGD32nc2
 
 ______________________
 
-# Nexus-AntiCheat
+## Nexus-AntiCheat
 QBCore Free AntiCheat. Supported, active development.
 
 ______________________
