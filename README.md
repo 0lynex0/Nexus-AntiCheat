@@ -25,6 +25,8 @@ ______________________
 
 Done - ✅ Discord logs
 
+Done - ✅ Admin checking
+
 Done - ✅ Anti-Teleport
 
 Done - ✅ Anti-Blacklisted weapons
@@ -33,7 +35,15 @@ Done - ✅ Anti-Boosted vehicles
 
 Done - ✅ Anti-Invisible
 
-Done - ✅ Admin checking
+Done - ✅ Anti-Boosted health
+
+Done - ✅ Anti-Boosted armor
+
+Done - ✅ Anti-Infinite stamina
+
+Done - ✅ Anti-NightVision
+
+Done - ✅ Anti-Freecam
 
 WIP  - 🟧 More detections
 
