@@ -51,21 +51,22 @@ exports["nexus_anticheat"]:SendLog("detection",{
 
 
 AddEventHandler("onResourceStart",function(r)
-    print("")
-    print([[
-        ███╗░░██╗███████╗██╗░░██╗██╗░░░██╗░██████╗  ░█████╗░░█████╗░
-        ████╗░██║██╔════╝╚██╗██╔╝██║░░░██║██╔════╝  ██╔══██╗██╔══██╗
-        ██╔██╗██║█████╗░░░╚███╔╝░██║░░░██║╚█████╗░  ███████║██║░░╚═╝
-        ██║╚████║██╔══╝░░░██╔██╗░██║░░░██║░╚═══██╗  ██╔══██║██║░░██╗
-        ██║░╚███║███████╗██╔╝╚██╗╚██████╔╝██████╔╝  ██║░░██║╚█████╔╝
-        ╚═╝░░╚══╝╚══════╝╚═╝░░╚═╝░╚═════╝░╚═════╝░  ╚═╝░░╚═╝░╚════╝░
-        ]])
-    print("                                                                                      ")
-    print([[ [ NEXUS AC ] has started!
-        Please, make sure to config the AC, so it works. Not all servers have the same config!
-        Thank you, for using NEXUS AntiCheat! https://discord.gg/KhgGD32nc2
-
-    ]])
+    if r == GetCurrentResourceName() then
+        print("")
+        print([[
+            ███╗░░██╗███████╗██╗░░██╗██╗░░░██╗░██████╗  ░█████╗░░█████╗░
+            ████╗░██║██╔════╝╚██╗██╔╝██║░░░██║██╔════╝  ██╔══██╗██╔══██╗
+            ██╔██╗██║█████╗░░░╚███╔╝░██║░░░██║╚█████╗░  ███████║██║░░╚═╝
+            ██║╚████║██╔══╝░░░██╔██╗░██║░░░██║░╚═══██╗  ██╔══██║██║░░██╗
+            ██║░╚███║███████╗██╔╝╚██╗╚██████╔╝██████╔╝  ██║░░██║╚█████╔╝
+            ╚═╝░░╚══╝╚══════╝╚═╝░░╚═╝░╚═════╝░╚═════╝░  ╚═╝░░╚═╝░╚════╝░
+            ]])
+        print("                                                                                      ")
+        print([[ [ NEXUS AC ] has started!
+            Please, make sure to config the AC, so it works. Not all servers have the same config!
+            Thank you, for using NEXUS AntiCheat! https://discord.gg/KhgGD32nc2
+            ]])
+        end
 
     if r == GetCurrentResourceName() then
         if GetCurrentResourceName() == "nexus_anticheat" then 
