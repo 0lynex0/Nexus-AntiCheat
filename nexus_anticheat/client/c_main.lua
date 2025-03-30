@@ -6,6 +6,8 @@ Citizen.CreateThread(function()
             if nexus.debug == true then
                 print("✅ ", "Heartbeat from playerload has been accepted")
             end
+
+            TriggerServerEvent("nexus:playerloaded")
             
             Citizen.Wait(10000)
 
@@ -29,8 +31,11 @@ Citizen.CreateThread(function()
         end
 
         -- teleportation
+        neni_v_aute = IsPedInAnyVehicle(PlayerPedId(), false)
+        pada = IsPedFalling(PlayerPedId())
+
         local coords = GetEntityCoords(playerPed)
-        TriggerServerEvent('nexusac:checkCoords', coords)
+        TriggerServerEvent('nexusac:checkCoords', coords, neni_v_aute, pada)
         if nexus.debug == true then 
             print("[ NEXUS AC ] AC is checking for coords.")
         end
@@ -50,6 +55,36 @@ Citizen.CreateThread(function()
         if nexus.debug == true then 
             print("[ NEXUS AC ] AC is checking for invisibility.")
         end
+
+        -- Max health
+        TriggerEvent('nexusac:checkHealth')
+        if nexus.debug == true then 
+            print("[ NEXUS AC ] AC is checking for health.")
+        end
+
+        -- Max armor
+        TriggerEvent('nexusac:checkArmor')
+        if nexus.debug == true then 
+            print("[ NEXUS AC ] AC is checking for armor.")
+        end
+
+        -- Infinite Stamina
+        TriggerEvent('nexusac:checkStamina')
+        if nexus.debug == true then 
+            print("[ NEXUS AC ] AC is checking for stamina.")
+        end
+
+        -- Infinite Stamina
+        TriggerEvent('nexusac:checkNightv')
+        if nexus.debug == true then 
+            print("[ NEXUS AC ] AC is checking for Night vision.")
+        end
+
+        -- Freecam
+        TriggerEvent('nexusac:checkFreecam')
+        if nexus.debug == true then 
+            print("[ NEXUS AC ] AC is checking for freecam.")
+        end
     end
 end)
 
@@ -65,5 +100,82 @@ AddEventHandler('nexusac:checkInvisible', function()
 
     if not IsEntityVisible(playerPed) then
         TriggerServerEvent('nexusac:logInvisiblePlayer')
+    end
+end)
+
+RegisterNetEvent('nexusac:checkHealth')
+AddEventHandler(('nexusac:checkHealth'), function(health)
+    local playerPed = PlayerPedId()
+    local health = GetEntityHealth(playerPed)
+
+    if health > nexus.MaxHealth then 
+        TriggerEvent("nexusac:logHealth")
+        if nexus.debug == true then 
+            print("[ NEXUS AC ] AC is checking sending HEALTH report.")
+        end
+    end
+end)
+
+RegisterNetEvent('nexusac:checkArmor')
+AddEventHandler(('nexusac:checkArmor'), function(armor)
+    local playerPed = PlayerPedId()
+    local armor = GetPedArmour(playerPed)
+
+    if armor > nexus.MaxArmor then 
+        TriggerEvent("nexusac:logArmor")
+        if nexus.debug == true then 
+            print("[ NEXUS AC ] AC is checking sending ARMOR report.")
+        end
+    end
+end)
+
+RegisterNetEvent('nexusac:checkStamina')
+AddEventHandler(('nexusac:checkStamina'), function(staminaLevel)
+    local playerPed = PlayerPedId()
+    local armor = GetPedArmour(playerPed)
+
+    if not IsPedInAnyVehicle(PlayerPedId(), true)
+        and not IsPedRagdoll(PlayerPedId())
+        and not IsPedFalling(PlayerPedId())
+        and not IsPedJumpingOutOfVehicle(PlayerPedId())
+        and not IsPedInParachuteFreeFall(PlayerPedId())
+        and GetEntitySpeed(PlayerPedId()) > 7
+    then
+            local staminaLevel = GetPlayerSprintStaminaRemaining(PlayerId())
+    end
+    if tonumber(staminaLevel) == 0.0 then
+        TriggerEvent("nexusac:logStamina")
+        if nexus.debug == true then 
+            print("[ NEXUS AC ] AC is checking sending STAMINA report.")
+        end
+    end
+end)
+
+RegisterNetEvent('nexusac:checkNightv')
+AddEventHandler(('nexusac:checkNightv'), function()
+    if GetUsingnightvision(true) and not IsPedInAnyHeli(PlayerPedId()) then
+        TriggerEvent("nexusac:logNightvision")
+        if nexus.debug == true then 
+            print("[ NEXUS AC ] AC is checking sending NIGHT VISION report.")
+        end
+    end
+    if GetUsingseethrough(true) and not IsPedInAnyHeli(PlayerPedId()) then
+        TriggerEvent("nexusac:logNightvision")
+        if nexus.debug == true then 
+            print("[ NEXUS AC ] AC is checking sending THERMAL VISION report.")
+        end
+    end
+end)
+
+RegisterNetEvent('nexusac:checkFreecam')
+AddEventHandler(('nexusac:checkFreecam'), function()
+    local playerCoords = GetEntityCoords(PlayerPedId())
+    local camCoords = GetFinalRenderedCamCoord()
+    local distance = #(playerCoords - camCoords)
+    if distance > 50 and not IsCinematicCamRendering() then 
+        TriggerEvent("nexusac:logFreecam")
+        if nexus.debug == true then 
+            print("[ NEXUS AC ] AC is checking sending NIGHT VISION report.")
+        end
     end
 end)

@@ -60,6 +60,8 @@ AddEventHandler("onResourceStart",function(r)
             ██║╚████║██╔══╝░░░██╔██╗░██║░░░██║░╚═══██╗  ██╔══██║██║░░██╗
             ██║░╚███║███████╗██╔╝╚██╗╚██████╔╝██████╔╝  ██║░░██║╚█████╔╝
             ╚═╝░░╚══╝╚══════╝╚═╝░░╚═╝░╚═════╝░╚═════╝░  ╚═╝░░╚═╝░╚════╝░
+
+                                Version 1.0.3
             ]])
         print("                                                                                      ")
         print([[ [ NEXUS AC ] has started!
@@ -70,7 +72,7 @@ AddEventHandler("onResourceStart",function(r)
 
     if r == GetCurrentResourceName() then
         if GetCurrentResourceName() == "nexus_anticheat" then 
-            print("[ NEXUS AC ] It is better to rename the resource to something else, so cheaters can't find it!")
+            print(" [ NEXUS AC ] It is better to rename the resource to something else, so cheaters can't find it!")
             print("                                                     ")
         end 
     end

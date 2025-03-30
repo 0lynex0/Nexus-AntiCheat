@@ -13,23 +13,6 @@ nexus.debug = false
 
 
 
---░██╗░░░░░░░██╗███████╗██████╗░██╗░░██╗░█████╗░░█████╗░██╗░░██╗░██████╗
---░██║░░██╗░░██║██╔════╝██╔══██╗██║░░██║██╔══██╗██╔══██╗██║░██╔╝██╔════╝
---░╚██╗████╗██╔╝█████╗░░██████╦╝███████║██║░░██║██║░░██║█████═╝░╚█████╗░
---░░████╔═████║░██╔══╝░░██╔══██╗██╔══██║██║░░██║██║░░██║██╔═██╗░░╚═══██╗
---░░╚██╔╝░╚██╔╝░███████╗██████╦╝██║░░██║╚█████╔╝╚█████╔╝██║░╚██╗██████╔╝
---░░░╚═╝░░░╚═╝░░╚══════╝╚═════╝░╚═╝░░╚═╝░╚════╝░░╚════╝░╚═╝░░╚═╝╚═════╝░
-
-
-nexus.Webhooks = { 
-    ['detection']= { -- DO NOT TOUCH
-        author = "", -- Name on the webhook
-        icon = '', -- Icon for the webhook
-        URL = 'WEBHOOK', -- The webhook URL
-    },
-}
-
-
 
 --██████╗░███████╗████████╗███████╗░█████╗░████████╗██╗░█████╗░███╗░░██╗░██████╗
 --██╔══██╗██╔════╝╚══██╔══╝██╔════╝██╔══██╗╚══██╔══╝██║██╔══██╗████╗░██║██╔════╝
@@ -42,6 +25,11 @@ nexus.BlacklistedWeapon = true
 nexus.Teleport          = true
 nexus.BoostedVehicles   = true
 nexus.Invisible         = true
+nexus.Health            = true
+nexus.Armor             = true
+nexus.Stamina           = true
+nexus.NightVision       = true
+nexus.Freecam           = true
 
 
 --░██████╗███████╗████████╗████████╗██╗███╗░░██╗░██████╗░░██████╗
@@ -67,3 +55,6 @@ nexus.Distance = 1000 -- In meters, how many does the player need to teleport to
 
 nexus.maxSpeed          = 100.0 -- Ignore, if nexus.BoostedVehicles is false.
 nexus.speedm            = "KM/H" -- KM/H || Mph -> What you use
+
+nexus.MaxHealth         = 100.0
+nexus.MaxArmor          = 100.0
