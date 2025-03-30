@@ -23,7 +23,8 @@ ______________________
 
 ______________________
 
-Most of the things are configurable
+Most of the things are configurable.
+PLEASE NOTE THAT NEXUS IS (FOR THE TIME OF BEING) **ONLY KICKING PLAYERS**. BANNING IS PLANNED ON FUTURE (MORE STABLE) RELEASES.
 
 ______________________
 
