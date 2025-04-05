@@ -25,10 +25,52 @@ local function isAdmin(src)
 end
 
 
+local function GenerateBanID(length)
+    local chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+    local result = ''
+    for i = 1, length do
+        local rand = math.random(1, #chars)
+        result = result .. chars:sub(rand, rand)
+    end
+    return result
+end
+
+
+local function BanPlayer(src, reason)
+    local banID = GenerateBanID(4)  -- Generate a unique Ban ID
+    local bannedBy = "Nexus AntiCheat"  -- Or set as "Console" for console bans
+
+    local identifiers = GetPlayerIdentifiers(src)
+    local discordID, license = "Unknown", "Unknown"
+
+    if identifiers and #identifiers > 0 then
+        for _, id in ipairs(identifiers) do
+            if string.sub(id, 1, 8) == "discord:" then
+                discordID = string.sub(id, 9)
+            elseif string.sub(id, 1, 8) == "license:" then
+                license = id
+            end
+        end
+    end
+
+    -- Insert ban into the database
+    exports.oxmysql:insert([[ 
+        INSERT INTO nexus_bans (banID, discordID, license, reason, bannedBy)
+        VALUES (?, ?, ?, ?, ?)
+    ]], {banID, discordID, license, reason, bannedBy})
+
+    -- DropPlayer after banning the player
+    DropPlayer(src, "[NEXUS AC] You have been banned for: " .. reason .. "\nBan ID: " .. banID)
+
+    print("[" .. banID .. "] Player " .. discordID .. " has been banned for: " .. reason)
+end
+
+
+
 RegisterNetEvent("nexusac:checkWeapons")
 AddEventHandler("nexusac:checkWeapons", function(weapon)
     if nexus.debug == true then 
-        print("[ NEXUS AC ] Anticheat has started a WEAPON check")
+        print("\27[35m[ NEXUS AC ] \27[0m Anticheat has started a WEAPON check")
     end
     local src = source 
     local Player = QBCore.Functions.GetPlayer(src)
@@ -50,8 +92,11 @@ AddEventHandler("nexusac:checkWeapons", function(weapon)
                                   "**ID:** " .. PlayerId .. "\n" ..
                                   "**Weapon hash:** " .. weapon,
                 })
-                if nexus.BlacklistedWeapon == true then 
-                    DropPlayer(src, "[ NEXUS AC ] You have been detected for using blacklisted weapon!")
+
+                if nexus.BlacklistedWeapon == true then
+                    if nexus.debug == false then
+                        BanPlayer(src, "Blacklisted weapon detected")
+                    end
                     return 
                 end
             end 
@@ -63,7 +108,7 @@ RegisterNetEvent("nexusac:checkCoords")
 AddEventHandler("nexusac:checkCoords", function(coords, neni_v_aute, pada)
 
     if nexus.debug == true then 
-        print("[ NEXUS AC ] Anticheat has started a COORDS check")
+        print("\27[35m[ NEXUS AC ] \27[0m Anticheat has started a COORDS check")
     end
 
     local src = source
@@ -92,15 +137,18 @@ AddEventHandler("nexusac:checkCoords", function(coords, neni_v_aute, pada)
                                 "**ID:** " .. PlayerId .. "\n" ..
                                 "**Distance:** " .. distance,
                 })
+
                 playerData[src].lastCoords = coords
                 playerData[src].lastCheck = os.time()
                 if nexus.Teleport == true then
-                    DropPlayer(src, "[ NEXUS AC ] You have been detected for teleporting!")
+                    if nexus.debug == false then
+                        BanPlayer(src, "Teleport detected")
+                    end
                     return
                 end
             else
                 if nexus.debug == true then 
-                    print("[ NEXUS AC ] Detected a potential teleport, but waiting for cooldown.")
+                    print("\27[35m[ NEXUS AC ] \27[0m Detected a potential teleport, but waiting for cooldown.")
                 end
             end
         else
@@ -112,7 +160,7 @@ end)
 RegisterServerEvent('nexusac:checkSpeed')
 AddEventHandler('nexusac:checkSpeed', function(speed)
     if nexus.debug == true then 
-        print("[ NEXUS AC ] Anticheat has started a SPEED check")
+        print("\27[35m[ NEXUS AC ] \27[0m Anticheat has started a SPEED check")
     end
     local src = source
     local playerName = GetPlayerName(src)
@@ -125,8 +173,8 @@ AddEventHandler('nexusac:checkSpeed', function(speed)
 
     if speed > maxSpeed then
         if nexus.debug == true then 
-            print("[ NEXUS AC ] DETECTION !")
-            print("[ NEXUS AC ] Anticheat has detected a BOOSTED VEHICLE! " .. playerName .. " exceeded max speed of " .. nexus.maxSpeed .. nexus.speedm .. " !")
+            print("\27[35m[ NEXUS AC ] \27[0m DETECTION !")
+            print("\27[35m[ NEXUS AC ] \27[0m Anticheat has detected a BOOSTED VEHICLE! " .. playerName .. " exceeded max speed of " .. nexus.maxSpeed .. nexus.speedm .. " !")
         end
         exports["nexus_anticheat"]:SendLog("detection",{
             color = 8454399,
@@ -135,8 +183,11 @@ AddEventHandler('nexusac:checkSpeed', function(speed)
                           "**ID:** " .. PlayerId .. "\n" ..
                           "**Speed exceeded:** " .. nexus.maxSpeed .. " " .. nexus.speedm,
         })
+
         if nexus.BoostedVehicles == true then
-            DropPlayer(src, "[ NEXUS AC ] You have been detected for boosted vehicle!")
+            if nexus.debug == false then
+                BanPlayer(src, "Boosted vehicle detected")
+            end
             return
         end
     end
@@ -146,7 +197,7 @@ end)
 RegisterServerEvent('nexusac:logInvisiblePlayer')
 AddEventHandler('nexusac:logInvisiblePlayer', function()
     if nexus.debug == true then 
-        print("[ NEXUS AC ] Anticheat has LOGGED an INVISIBLE player")
+        print("\27[35m[ NEXUS AC ] \27[0m Anticheat has LOGGED an INVISIBLE player")
     end
     local src = source
     local playerName = GetPlayerName(src)
@@ -163,7 +214,9 @@ AddEventHandler('nexusac:logInvisiblePlayer', function()
     })
 
     if nexus.Invisible == true then
-        DropPlayer(src, "[NEXUS AC] You have been detected for invisibility!")
+        if nexus.debug == false then
+            BanPlayer(src, "Invisibility detected")
+        end
         return
     end
 end)
@@ -171,7 +224,7 @@ end)
 RegisterNetEvent('nexusac:logHealth')
 AddEventHandler("nexusac:logHealth", function(health)
     if nexus.debug == true then
-        print("[ NEXUS AC ] Anticheat has LOGGED an HEALTH exceeding player")
+        print("\27[35m[ NEXUS AC ] \27[0m Anticheat has LOGGED an HEALTH exceeding player")
     end
     local src = source
     local playerName = GetPlayerName(src)
@@ -189,7 +242,9 @@ AddEventHandler("nexusac:logHealth", function(health)
     })
 
     if nexus.Health == true then
-        DropPlayer(src, "[NEXUS AC] You have been detected for health cheats!")
+        if nexus.debug == false then
+            BanPlayer(src, "Exceeded health detected")
+        end
         return
     end
 end)
@@ -197,7 +252,7 @@ end)
 RegisterNetEvent('nexusac:logArmor')
 AddEventHandler("nexusac:logArmor", function(armor)
     if nexus.debug == true then
-        print("[ NEXUS AC ] Anticheat has LOGGED an Armor exceeding player")
+        print("\27[35m[ NEXUS AC ] \27[0m Anticheat has LOGGED an Armor exceeding player")
     end
     local src = source
     local playerName = GetPlayerName(src)
@@ -215,7 +270,9 @@ AddEventHandler("nexusac:logArmor", function(armor)
     })
 
     if nexus.Armor == true then
-        DropPlayer(src, "[NEXUS AC] You have been detected for armor cheats!")
+        if nexus.debug == false then
+            BanPlayer(src, "Exceeded armor detected")
+        end
         return
     end
 end)
@@ -223,7 +280,7 @@ end)
 RegisterNetEvent('nexusac:logStamina')
 AddEventHandler("nexusac:logStamina", function(staminaLevel)
     if nexus.debug == true then
-        print("[ NEXUS AC ] Anticheat has LOGGED an Stamina exceeding player")
+        print("\27[35m[ NEXUS AC ] \27[0m Anticheat has LOGGED an Stamina exceeding player")
     end
     local src = source
     local playerName = GetPlayerName(src)
@@ -241,7 +298,9 @@ AddEventHandler("nexusac:logStamina", function(staminaLevel)
     })
 
     if nexus.Stamina == true then
-        DropPlayer(src, "[NEXUS AC] You have been detected for stamina cheats!")
+        if nexus.debug == false then
+            BanPlayer(src, "Exceeded stamina detected")
+        end
         return
     end
 end)
@@ -249,7 +308,7 @@ end)
 RegisterNetEvent('nexusac:logNightvision')
 AddEventHandler("nexusac:logNightvision", function()
     if nexus.debug == true then
-        print("[ NEXUS AC ] Anticheat has LOGGED a Night Vision/Thermal Vision using player")
+        print("\27[35m[ NEXUS AC ] \27[0m Anticheat has LOGGED a Night Vision/Thermal Vision using player")
     end
     local src = source
     local playerName = GetPlayerName(src)
@@ -266,7 +325,9 @@ AddEventHandler("nexusac:logNightvision", function()
     })
 
     if nexus.NightVision == true then
-        DropPlayer(src, "[NEXUS AC] You have been detected for Night Vision/Thermal Vision cheats!")
+        if nexus.debug == false then
+            BanPlayer(src, "Nightvision detected")
+        end
         return
     end
 end)
@@ -274,7 +335,7 @@ end)
 RegisterNetEvent('nexusac:logFreecam')
 AddEventHandler("nexusac:logFreecam", function()
     if nexus.debug == true then
-        print("[ NEXUS AC ] Anticheat has LOGGED a FREECAM using player")
+        print("\27[35m[ NEXUS AC ] \27[0m Anticheat has LOGGED a FREECAM using player")
     end
     local src = source
     local playerName = GetPlayerName(src)
@@ -291,7 +352,9 @@ AddEventHandler("nexusac:logFreecam", function()
     })
 
     if nexus.Freecam == true then
-        DropPlayer(src, "[NEXUS AC] You have been detected for freecam cheats!")
+        if nexus.debug == false then
+            BanPlayer(src, "Freecam detected")
+        end
         return
     end
 end)
@@ -299,12 +362,17 @@ end)
 RegisterNetEvent("nexus:playerloaded")
 AddEventHandler("nexus:playerloaded", function()
     if nexus.debug == true then
-        print("[ NEXUS AC ] Anticheat has LOGGED a player loaded")
+        print("\27[35m[ NEXUS AC ] \27[0m Anticheat has LOGGED a player loaded")
     end
 
     local src = source
     local playerName = GetPlayerName(src)
+    if playerName == nil then
+        playerName = "Unknown"
+    end
 
+    Wait(1000)
+    
     exports["nexus_anticheat"]:SendLog("joinlog",{
         color = 6029134,
         title = "[ NEXUS AC ] Player has joined.",
@@ -312,4 +380,5 @@ AddEventHandler("nexus:playerloaded", function()
                       "**ID:** " .. src,
     })
     print("\27[35m[ NEXUS AC ] \27[0m player " .. "\27[36m".. playerName .. "\27[0m has connected!")
+    Wait(1000)
 end)

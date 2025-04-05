@@ -9,8 +9,27 @@ nexus = nexus or {}
 --░╚════╝░░╚════╝░╚═╝░░╚══╝╚═╝░░░░░╚═╝░╚═════╝░
 
 
+-- Debug mode will NOT BAN PLAYERS, but it will log a detection.
 nexus.debug = false
 
+nexus.Discord = "https://discord.com/" -- Your Discord link
+
+
+--░██╗░░░░░░░██╗███████╗██████╗░██╗░░██╗░█████╗░░█████╗░██╗░░██╗░██████╗
+--░██║░░██╗░░██║██╔════╝██╔══██╗██║░░██║██╔══██╗██╔══██╗██║░██╔╝██╔════╝
+--░╚██╗████╗██╔╝█████╗░░██████╦╝███████║██║░░██║██║░░██║█████═╝░╚█████╗░
+--░░████╔═████║░██╔══╝░░██╔══██╗██╔══██║██║░░██║██║░░██║██╔═██╗░░╚═══██╗
+--░░╚██╔╝░╚██╔╝░███████╗██████╦╝██║░░██║╚█████╔╝╚█████╔╝██║░╚██╗██████╔╝
+--░░░╚═╝░░░╚═╝░░╚══════╝╚═════╝░╚═╝░░╚═╝░╚════╝░░╚════╝░╚═╝░░╚═╝╚═════╝░
+
+
+nexus.Webhooks = { 
+    ['detection']= { -- DO NOT TOUCH
+        author = "", -- Name on the webhook
+        icon = '', -- Icon for the webhook
+        URL = 'WEBHOOK', -- The webhook URL
+    },
+}
 
 
 
@@ -53,7 +72,7 @@ nexus.BlacklistedWeapons = {
 
 nexus.Distance = 1000 -- In meters, how many does the player need to teleport to get detected?
 
-nexus.maxSpeed          = 100.0 -- Ignore, if nexus.BoostedVehicles is false.
+nexus.maxSpeed          = 200.0 -- Ignore, if nexus.BoostedVehicles is false.
 nexus.speedm            = "KM/H" -- KM/H || Mph -> What you use
 
 nexus.MaxHealth         = 100.0
