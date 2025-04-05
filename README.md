@@ -31,6 +31,8 @@ ______________________
 
 Done - ✅ Discord logs
 
+Done - ✅ SQL banning
+
 Done - ✅ Admin checking
 
 Done - ✅ Anti-Teleport
