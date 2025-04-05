@@ -2,7 +2,7 @@
 
 ______________________
 
-#      🎗 Join Nexus Services for support, and special releases! 🎗
+# 🎗 Join Nexus Services for support, and special releases! 🎗
   [Discord](https://discord.gg/KhgGD32nc2) | 
   We create WEBs, MLOs and Scripts!
 
@@ -13,6 +13,11 @@ _________________**Nexus-AntiCheat**_________________
 ![image](https://github.com/user-attachments/assets/34720c9d-16d1-4dd9-82d3-a84b7e8f7ab0)
 
 QBCore/QBX Core Free AntiCheat. Supported, active development.
+
+**Dependencies:**
+- QB / QBX core
+- oxmysql
+
 
 ______________________
 
