@@ -1,61 +1,54 @@
 # DOWNLOAD LATEST [RELEASE](https://github.com/Muffinzo/Nexus-AntiCheat/releases)
 
-______________________
+---
 
 # 🎗 Join Nexus Services for support, and special releases! 🎗
-  [Discord](https://discord.gg/KhgGD32nc2) | 
-  We create WEBs, MLOs and Scripts!
+[Discord](https://discord.gg/KhgGD32nc2) | We create WEBs, MLOs, and Scripts!
 
-______________________
+---
 
-_________________**Nexus-AntiCheat**_________________
-
-![image](https://github.com/user-attachments/assets/34720c9d-16d1-4dd9-82d3-a84b7e8f7ab0)
-
-QBCore/QBX Core Free AntiCheat. Supported, active development.
-
-**Dependencies:**
-- QB / QBX core
-- oxmysql
+# **Nexus-AntiCheat**
+<img src="https://github.com/user-attachments/assets/34720c9d-16d1-4dd9-82d3-a84b7e8f7ab0" width="400" height="350" />
 
 
-______________________
+_QBCore/QBX Core Free AntiCheat. Supported, active development._
 
-✅ QBCore
-✅ QBX Core
+---
 
-⛔ ESX
+### **Dependencies:**
+- **QB / QBX core**
+- **oxmysql**
 
-______________________
+---
 
-Most of the things are configurable.
+### ✅ **Supported Frameworks:**
+- **QBCore**
+- **QBX Core**
 
-______________________
+### ⛔ **Not Supported:**
+- **ESX**
 
-Done - ✅ Discord logs
+---
 
-Done - ✅ SQL banning
+### **Most of the things are configurable.**
 
-Done - ✅ Admin checking
+---
 
-Done - ✅ Anti-Teleport
+### **Completed Features:**
+- ✅ **Discord logs**
+- ✅ **SQL banning**
+- ✅ **Admin checking**
+- ✅ **Anti-Teleport**
+- ✅ **Anti-Blacklisted weapons**
+- ✅ **Anti-Boosted vehicles**
+- ✅ **Anti-Invisible**
+- ✅ **Anti-Boosted health**
+- ✅ **Anti-Boosted armor**
+- ✅ **Anti-Infinite stamina**
+- ✅ **Anti-NightVision**
+- ✅ **Anti-Freecam**
 
-Done - ✅ Anti-Blacklisted weapons
+### 🟧 **Work In Progress:**
+- More detections
 
-Done - ✅ Anti-Boosted vehicles
-
-Done - ✅ Anti-Invisible
-
-Done - ✅ Anti-Boosted health
-
-Done - ✅ Anti-Boosted armor
-
-Done - ✅ Anti-Infinite stamina
-
-Done - ✅ Anti-NightVision
-
-Done - ✅ Anti-Freecam
-
-WIP  - 🟧 More detections
-
-______________________
+---
