@@ -129,3 +129,13 @@ RegisterCommand("nexusban", function(source, args, rawCommand)
 
     print( "[" .. banID .. "] Player " .. discordID .. " has been banned by " .. bannedBy .. " with the reason: " .. reason )
 end, true)
+
+
+RegisterCommand("nexus", function(source, args, rawCommand)
+    print([[
+        Thank you for using Nexus!
+
+        nexusban (id) (reason) == Bans a player by his player ID
+        nexusunban (banID) == Unbans a player by his ban ID
+    ]])
+end, true)

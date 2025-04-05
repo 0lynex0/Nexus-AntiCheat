@@ -67,6 +67,8 @@ AddEventHandler("onResourceStart",function(r)
         print([[ [ NEXUS AC ] has started!
             Please, make sure to config the AC, so it works. Not all servers have the same config!
             Thank you, for using NEXUS AntiCheat! https://discord.gg/KhgGD32nc2
+
+            Use the command "nexus" to show all commands.
             ]])
         end
 
