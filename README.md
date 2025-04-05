@@ -47,6 +47,7 @@ _QBCore/QBX Core Free AntiCheat. Supported, active development._
 - ✅ **Anti-Infinite stamina**
 - ✅ **Anti-NightVision**
 - ✅ **Anti-Freecam**
+- ✅ **Anti-Objects**
 
 ### 🟧 **Work In Progress:**
 - More detections
