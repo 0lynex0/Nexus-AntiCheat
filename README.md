@@ -50,5 +50,6 @@ _QBCore/QBX Core Free AntiCheat. Supported, active development._
 
 ### 🟧 **Work In Progress:**
 - More detections
+- Screenshoting cheater's screen
 
 ---
