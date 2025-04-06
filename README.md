@@ -8,15 +8,16 @@
 ---
 
 # **Nexus-AntiCheat**
-<img src="https://github.com/user-attachments/assets/34720c9d-16d1-4dd9-82d3-a84b7e8f7ab0" width="400" height="350" />
+
+<img src="https://github.com/user-attachments/assets/71431917-afb8-4bc6-bc15-e1b48a42303a" width="400" height="350" />
 
 
-_QBCore/QBX Core Free AntiCheat. Supported, active development._
+_QBCore / QBX Core / ESX Free AntiCheat. Supported, active development._
 
 ---
 
 ### **Dependencies:**
-- **QB / QBX core**
+- **QB / QBX / ESX**
 - **oxmysql**
 
 ---
@@ -24,9 +25,10 @@ _QBCore/QBX Core Free AntiCheat. Supported, active development._
 ### ✅ **Supported Frameworks:**
 - **QBCore**
 - **QBX Core**
+- **ESX**
 
 ### ⛔ **Not Supported:**
-- **ESX**
+- **vRP**
 
 ---
 
