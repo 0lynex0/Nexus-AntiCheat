@@ -1,4 +1,11 @@
-local QBCore = exports['qb-core']:GetCoreObject()
+if nexus.Framework == "QBCore" then 
+    QBCore = exports['qb-core']:GetCoreObject()
+end
+
+if nexus.Framework == "ESX" then
+    ESX = exports["es_extended"]:getSharedObject()
+end
+
 
 local blacklistedWeapons = nexus.BlacklistedWeapons
 
@@ -7,7 +14,12 @@ local playerData = {}
 -- Check if the player is an admin
 -- Check if the player is an admin using Discord ID
 local function isAdmin(src)
-    local Player = QBCore.Functions.GetPlayer(src)
+    if nexus.Framework == "QBCore" then 
+        local Player = QBCore.Functions.GetPlayer(src)
+    end
+    if nexus.Framework == "ESX" then
+        local Player = ESX.GetPlayerFromId(src)
+    end
     if Player then
         local identifiers = GetPlayerIdentifiers(src)  -- Get all identifiers
         for _, id in pairs(identifiers) do
@@ -72,8 +84,15 @@ AddEventHandler("nexusac:checkWeapons", function(weapon)
     if nexus.debug == true then 
         print("\27[35m[ NEXUS AC ] \27[0m Anticheat has started a WEAPON check")
     end
+
     local src = source 
-    local Player = QBCore.Functions.GetPlayer(src)
+
+    if nexus.Framework == "QBCore" then 
+        local Player = QBCore.Functions.GetPlayer(src)
+    end
+    if nexus.Framework == "ESX" then
+        local Player = ESX.GetPlayerFromId(src)
+    end
 
     local playerName = GetPlayerName(src)
     local PlayerId = src
@@ -209,7 +228,7 @@ AddEventHandler('nexusac:logInvisiblePlayer', function()
     exports["nexus_anticheat"]:SendLog("detection",{
         color = 8454399,
         title = "[ NEXUS AC ] Invisible player detected!",
-        description = "**Hráč:** " .. playerName .. "\n" ..
+        description = "**Player:** " .. playerName .. "\n" ..
                       "**ID:** " .. src,
     })
 
@@ -236,7 +255,7 @@ AddEventHandler("nexusac:logHealth", function(health)
     exports["nexus_anticheat"]:SendLog("detection",{
         color = 8454399,
         title = "[ NEXUS AC ] Health exceeding player detected!",
-        description = "**Hráč:** " .. playerName .. "\n" ..
+        description = "**Player:** " .. playerName .. "\n" ..
                       "**ID:** " .. src ..
                       "**Health:**" .. health,
     })
@@ -264,7 +283,7 @@ AddEventHandler("nexusac:logArmor", function(armor)
     exports["nexus_anticheat"]:SendLog("detection",{
         color = 8454399,
         title = "[ NEXUS AC ] Armor exceeding player detected!",
-        description = "**Hráč:** " .. playerName .. "\n" ..
+        description = "**Player:** " .. playerName .. "\n" ..
                       "**ID:** " .. src ..
                       "**Health:**" .. health,
     })
@@ -292,7 +311,7 @@ AddEventHandler("nexusac:logStamina", function(staminaLevel)
     exports["nexus_anticheat"]:SendLog("detection",{
         color = 8454399,
         title = "[ NEXUS AC ] Stamina exceeding player detected!",
-        description = "**Hráč:** " .. playerName .. "\n" ..
+        description = "**Player:** " .. playerName .. "\n" ..
                       "**ID:** " .. src ..
                       "**Stamina:**" .. staminaLevel,
     })
@@ -320,7 +339,7 @@ AddEventHandler("nexusac:logNightvision", function()
     exports["nexus_anticheat"]:SendLog("detection",{
         color = 8454399,
         title = "[ NEXUS AC ] Night Vision/Thermal Vision using player detected!",
-        description = "**Hráč:** " .. playerName .. "\n" ..
+        description = "**Player:** " .. playerName .. "\n" ..
                       "**ID:** " .. src,
     })
 
@@ -347,7 +366,7 @@ AddEventHandler("nexusac:logFreecam", function()
     exports["nexus_anticheat"]:SendLog("detection",{
         color = 8454399,
         title = "[ NEXUS AC ] Freecam using player detected!",
-        description = "**Hráč:** " .. playerName .. "\n" ..
+        description = "**Player:** " .. playerName .. "\n" ..
                       "**ID:** " .. src,
     })
 
@@ -377,7 +396,7 @@ AddEventHandler("nexus:playerloaded", function()
     exports["nexus_anticheat"]:SendLog("joinlog",{
         color = 6029134,
         title = "[ NEXUS AC ] Player has joined.",
-        description = "**Hráč:** " .. playerName .. "\n" ..
+        description = "**Player:** " .. playerName .. "\n" ..
                       "**ID:** " .. src,
     })
     print("\27[35m[ NEXUS AC ] \27[0m player " .. "\27[36m".. playerName .. "\27[0m has connected!")

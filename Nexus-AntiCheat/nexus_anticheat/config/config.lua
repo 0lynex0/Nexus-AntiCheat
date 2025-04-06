@@ -9,28 +9,12 @@ nexus = nexus or {}
 --░╚════╝░░╚════╝░╚═╝░░╚══╝╚═╝░░░░░╚═╝░╚═════╝░
 
 
--- Debug mode will NOT BAN PLAYERS, but it will log a detection.
-nexus.debug = false
+
+nexus.debug = false -- Debug mode will NOT BAN PLAYERS, but it will log a detection.
 
 nexus.Discord = "https://discord.com/" -- Your Discord link
 
-
---░██╗░░░░░░░██╗███████╗██████╗░██╗░░██╗░█████╗░░█████╗░██╗░░██╗░██████╗
---░██║░░██╗░░██║██╔════╝██╔══██╗██║░░██║██╔══██╗██╔══██╗██║░██╔╝██╔════╝
---░╚██╗████╗██╔╝█████╗░░██████╦╝███████║██║░░██║██║░░██║█████═╝░╚█████╗░
---░░████╔═████║░██╔══╝░░██╔══██╗██╔══██║██║░░██║██║░░██║██╔═██╗░░╚═══██╗
---░░╚██╔╝░╚██╔╝░███████╗██████╦╝██║░░██║╚█████╔╝╚█████╔╝██║░╚██╗██████╔╝
---░░░╚═╝░░░╚═╝░░╚══════╝╚═════╝░╚═╝░░╚═╝░╚════╝░░╚════╝░╚═╝░░╚═╝╚═════╝░
-
-
-nexus.Webhooks = { 
-    ['detection']= { -- DO NOT TOUCH
-        author = "", -- Name on the webhook
-        icon = '', -- Icon for the webhook
-        URL = 'WEBHOOK', -- The webhook URL
-    },
-}
-
+nexus.Framework = "QBCore" -- QBCore (also works for QBX) or ESX
 
 
 --██████╗░███████╗████████╗███████╗░█████╗░████████╗██╗░█████╗░███╗░░██╗░██████╗

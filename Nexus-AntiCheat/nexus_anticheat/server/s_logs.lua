@@ -61,15 +61,15 @@ AddEventHandler("onResourceStart",function(r)
             ██║░╚███║███████╗██╔╝╚██╗╚██████╔╝██████╔╝  ██║░░██║╚█████╔╝
             ╚═╝░░╚══╝╚══════╝╚═╝░░╚═╝░╚═════╝░╚═════╝░  ╚═╝░░╚═╝░╚════╝░
 
-                                Version 1.0.6
+                                Version 1.0.8
             ]])
         print("                                                                                      ")
         print([[ [ NEXUS AC ] has started!
             Please, make sure to config the AC, so it works. Not all servers have the same config!
             Thank you, for using NEXUS AntiCheat! https://discord.gg/KhgGD32nc2
 
-            Use the command "nexus" to show all commands.
             ]])
+            print("	\27[31m   Use the command 'nexus' to show all commands.\27[0m")
         end
 
     if r == GetCurrentResourceName() then

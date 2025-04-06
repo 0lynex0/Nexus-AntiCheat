@@ -1,4 +1,9 @@
-local QBCore = exports['qb-core']:GetCoreObject()
+if nexus.Framework == "QBCore" then 
+    local QBCore = exports['qb-core']:GetCoreObject()
+end
+if nexus.Framework == "ESX" then
+    local ESX = exports["es_extended"]:getSharedObject()
+end
 
 AddEventHandler('playerConnecting', function(playerName, setKickReason, deferrals)
     deferrals.defer()  -- Deferring the connection to check the ban status  
@@ -15,10 +20,10 @@ AddEventHandler('playerConnecting', function(playerName, setKickReason, deferral
     Wait(1000)
     deferrals.update("🔍 Nexus AC: Searching bans database...")
     Wait(1250)
-    deferrals.update("✅ Nexus AC: Access granted. Welcome!")
+    deferrals.update("✅ Nexus AC: Done searching")
 
 
-    Citizen.Wait(3000)
+    Citizen.Wait(2000)
 
     for _, id in ipairs(identifiers) do
         if string.sub(id, 1, 8) == "discord:" then
@@ -41,8 +46,17 @@ AddEventHandler('playerConnecting', function(playerName, setKickReason, deferral
             local banTimestamp = result[1].timestamp
 
             
-            deferrals.done("\n\n[ NEXUS ANTICHEAT ] You are banned from the server.\nBan ID: " .. banID .. "\nReason: " .. reason .. "\nBanned by: " .. bannedBy .. "\nBan Timestamp: " .. banTimestamp .. "\n Unban Discord: " .. nexus.Discord)
-            print("[ NEXUS AC ] Player " .. playerName .. " tried to connect, but has an active ban " .. banID)
+            deferrals.done(
+                "\n\n[ NEXUS ANTICHEAT ]\n\n" ..
+                "⛔ You are banned from the server.\n\n" ..
+                "📄 Ban ID: " .. banID .. "\n" ..
+                "📌 Reason: " .. reason .. "\n" ..
+                "🛡️  Banned by: " .. bannedBy .. "\n" ..
+                "🕒 Ban Timestamp: " .. banTimestamp .. "\n\n" ..
+                "🔗 Unban Request: " .. nexus.Discord
+            )            
+
+            print("\27[35m[ NEXUS AC ] \27[0m Player " .. playerName .. " tried to connect, but has an active ban " .. banID)
         else
             
             deferrals.done()
@@ -62,89 +76,86 @@ local function GenerateBanID(length)
     return result
 end
 
-RegisterCommand("nexusunban", function(source, args, rawCommand)
-    if not args[1] then 
-        print("Usage: /nexusunban [banid]")
+RegisterCommand("nexus", function(source, args, rawCommand)
+    local subcommand = args[1]
+
+    if not subcommand then
+        print([[
+        
+💠 Nexus Anticheat Admin Commands 💠
+
+▸ /nexus ban [id] [reason]       - Ban a player by ID
+▸ /nexus unban [banID]           - Unban a player by Ban ID
+
+Example: /nexus ban 3 invisibility hacks
+Example: /nexus unban E770
+
+        ]])
         return
     end
 
-    local banId = args[1]
-
-    if not banId then
-        print("Invalid ban ID.")
-        return
-    end
-
-    local unbannedBy = source == 0 and "Console" or (GetPlayerName(source) or "Unknown")
-
-    exports.oxmysql:execute([[
-        DELETE FROM nexus_bans WHERE banID = ?
-    ]], {banId}, function(result)
-        if result.affectedRows and result.affectedRows > 0 then
-            print("[" .. banId .. "] has been unbanned and removed from the database.")
-        else
-            print("No ban record found for Ban ID " .. banId)
+    if subcommand == "ban" then
+        local targetId = tonumber(args[2])
+        if not targetId then
+            print("⚠️ Usage: /nexus ban [id] [reason]")
+            return
         end
-    end)
 
-end, true)
+        local targetName = GetPlayerName(targetId)
+        if not targetName then
+            print("❌ Player is not online.")
+            return
+        end
 
-RegisterCommand("nexusban", function(source, args, rawCommand)
-    if not args[1] then 
-        print("Usage: /nexusban [id] [reason]")
-        return
-    end
+        local reason = table.concat(args, " ", 3)
+        if reason == nil or reason == "" then
+            reason = "No reason provided"
+        end
 
-    local targetId = tonumber(args[1])
-    if not targetId then
-        print("Invalid player ID.")
-        return
-    end
+        local bannedBy = source == 0 and "Console" or (GetPlayerName(source) or "Unknown")
+        local banID = GenerateBanID(4)
 
-    local targetName = GetPlayerName(targetId)
-    if not targetName then
-        print("Player is not online.")
-        return
-    end
+        local identifiers = GetPlayerIdentifiers(targetId)
+        local discordID, license = "Unknown", "Unknown"
 
-    local reason = table.concat(args, " ", 2)
-    if reason == nil or reason == "" then
-        reason = "No reason provided"
-    end
-
-    local bannedBy = source == 0 and "Console" or (GetPlayerName(source) or "Unknown")
-
-    local banID = GenerateBanID(4)
-
-    local identifiers = GetPlayerIdentifiers(targetId)
-    local discordID, license = "Unknown", "Unknown"
-
-    if identifiers and #identifiers > 0 then
-        for _, id in ipairs(identifiers) do
-            if string.sub(id, 1, 8) == "discord:" then
-                discordID = string.sub(id, 9)
-            elseif string.sub(id, 1, 8) == "license:" then
-                license = id
+        if identifiers and #identifiers > 0 then
+            for _, id in ipairs(identifiers) do
+                if string.sub(id, 1, 8) == "discord:" then
+                    discordID = string.sub(id, 9)
+                elseif string.sub(id, 1, 8) == "license:" then
+                    license = id
+                end
             end
         end
+
+        exports.oxmysql:insert([[
+            INSERT INTO nexus_bans (banID, discordID, license, reason, bannedBy)
+            VALUES (?, ?, ?, ?, ?)
+        ]], {banID, discordID, license, reason, bannedBy})
+
+        DropPlayer(targetId, "You've been banned!\n\nReason: " .. reason .. "\nBan ID: " .. banID)
+        print("✅ [" .. banID .. "] Player " .. discordID .. " has been banned by " .. bannedBy .. " | Reason: " .. reason)
+
+    elseif subcommand == "unban" then
+        local banId = args[2]
+        if not banId then
+            print("⚠️ Usage: /nexus unban [banID]")
+            return
+        end
+
+        local unbannedBy = source == 0 and "Console" or (GetPlayerName(source) or "Unknown")
+
+        exports.oxmysql:execute([[
+            DELETE FROM nexus_bans WHERE banID = ?
+        ]], {banId}, function(result)
+            if result.affectedRows and result.affectedRows > 0 then
+                print("✅ [" .. banId .. "] Unbanned by " .. unbannedBy .. ".")
+            else
+                print("❌ No ban record found for Ban ID: " .. banId)
+            end
+        end)
+
+    else
+        print("❌ Unknown subcommand. Use `/nexus` to see available options.")
     end
-
-    exports.oxmysql:insert([[ 
-        INSERT INTO nexus_bans (banID, discordID, license, reason, bannedBy)
-        VALUES (?, ?, ?, ?, ?)
-    ]], {banID, discordID, license, reason, bannedBy})
-
-    DropPlayer(targetId, "You've been banned!\n\nReason: " .. reason .. "\nBan ID: " .. banID)
-
-    print( "[" .. banID .. "] Player " .. discordID .. " has been banned by " .. bannedBy .. " with the reason: " .. reason )
-end, true)
-
-
-RegisterCommand("nexus", function(source, args, rawCommand)
-    print([[
-        Thank you for using Nexus!
-
-        nexusban (id) (reason) == Bans a player by his player ID
-        nexusunban (banID) == Unbans a player by his ban ID
-    ]])
 end, true)

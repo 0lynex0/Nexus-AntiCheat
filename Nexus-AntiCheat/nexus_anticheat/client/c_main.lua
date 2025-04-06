@@ -1,10 +1,18 @@
+if nexus.Framework == "QBCore" then 
+    nexus.PL = 'QBCore:Client:OnPlayerLoaded'
+end
+if nexus.Framework == "ESX" then
+    nexus.PL = 'esx:playerLoaded'
+end
+
+
 PlayerLoaded = false
 
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(5000)
-
-        AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
+        
+        AddEventHandler(nexus.PL, function()
             if nexus.debug == true then
                 print("✅ ", "Heartbeat from playerload has been accepted")
             end
