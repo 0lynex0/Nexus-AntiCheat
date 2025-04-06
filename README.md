@@ -35,6 +35,9 @@ _QBCore / QBX Core / ESX Free AntiCheat. Supported, active development._
 ### **Most of the things are configurable.**
 
 ---
+![nexusban](https://github.com/user-attachments/assets/70ded137-1189-4978-bd80-a204b701afb4)
+
+
 
 ### **Completed Features:**
 - ✅ **Discord logs**
