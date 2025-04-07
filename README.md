@@ -58,6 +58,6 @@ _QBCore / QBX Core / ESX Free AntiCheat. Supported, active development._
 - More detections
 - Screenshoting cheater's screen
 
-<img src="https://github.com/user-attachments/assets/1c2724b1-aefb-438e-a065-9a75781eb0e4" width="400" height="350" />
+<img src="https://github.com/user-attachments/assets/1c2724b1-aefb-438e-a065-9a75781eb0e4" width="700" height="450" />
 
 ---
