@@ -1,0 +1,67 @@
+/* Z�kladn� styly pro admin panel */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #1e1e1e;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.panel {
+    background-color: #2c2c2c;
+    color: white;
+    width: 300px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.6);
+    opacity: 0; /* Za��n� skryt� */
+    transition: opacity 0.5s ease-in-out; /* Animace pro zobrazen� panelu */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.panel.show {
+    opacity: 1; /* Zobraz� panel p�i aktivaci */
+}
+
+h2 {
+    margin: 0;
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+button {
+    background-color: #6c5ce7;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #5c4ec2; /* Tmav�� odst�n p�i hoveru */
+}
+
+/* Pro lep�� responsivitu */
+@media (max-width: 600px) {
+    .panel {
+        width: 250px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    button {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+}

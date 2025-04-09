@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Nexus AC Admin Panel</title>
+  <style>
+    body {
+      color: #fff;
+      font-family: sans-serif;
+      padding: 20px;
+      display: none; 
+      position: fixed; 
+      top: 50%; 
+      left: 50%;
+      transform: translate(-50%, -50%); 
+      z-index: 9999; 
+      pointer-events: none; 
+      opacity: 0;  
+      transition: opacity 0.5s ease-in-out; 
+    }
+
+    
+    .panel {
+      width: 1400px;  
+      height: 800px;  
+      background: rgba(18, 18, 18, 0.98);
+      padding: 20px;
+      border-radius: 10px; 
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.7); 
+      pointer-events: auto; 
+    }
+
+    
+    .fade-in {
+      display: block; 
+      opacity: 1; 
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      border: 1px solid #555;
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background: #222;
+    }
+
+    button {
+      background: hsla(0, 100%, 50%, 0.384);
+      color: rgb(255, 255, 255);
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    h1 {
+      color: hsl(261, 100%, 50%);
+      text-align: center;
+    }
+
+    .header {
+      display: flex;
+      justify-content: flex-start;
+      gap: 130px;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .header input[type="text"] {
+      padding: 8px 12px;
+      border-radius: 5px;
+      border: none;
+      width: 300px;
+      font-size: 14px;
+      background-color: rgba(0,0,0,0.9);
+      color: white;
+    }
+
+    .modal {
+      position: fixed;
+      z-index: 10000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      pointer-events: auto;
+    }
+
+    .modal-buttons {
+      display: flex;
+      justify-content: center; 
+      margin-top: 20px;
+    }
+
+    .modal-buttons button {
+      padding: 10px 20px;
+      background: hsl(261, 100%, 50%);
+      border: none;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .modal-buttons button:hover {
+      background: hsl(125, 96%, 29%);
+    }
+
+  </style>
+</head>
+<body>
+  <div class="panel">
+    <div class="header">
+      <input type="text" id="searchInput" placeholder="Search..." onkeyup="filterBans()">
+      <h1>Nexus Infinity - Admin Panel</h1>
+    </div>
+    <table>
+      <thead>
+        <tr><th>Ban ID</th><th>Reason</th><th>Discord</th><th>Action</th></tr>
+      </thead>
+      <tbody id="banList"></tbody>
+    </table>
+  </div>
+
+  
+  <div id="confirmModal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <p id="confirmMessage">This feature is only available in Nexus Infinity!</p>
+      <div class="modal-buttons">
+        <button id="confirmYes">Okay</button>
+      </div>
+    </div>
+  </div>  
+
+
+
+  <script>
+    const body = document.body;
+
+    window.addEventListener("message", function(event) {
+      if (event.data.action === "openPanel") {
+        body.style.display = "block"; 
+        setTimeout(() => body.classList.add("fade-in"), 10); 
+      } else if (event.data.action === "receiveBans") {
+        const bans = event.data.bans;
+        const tbody = document.getElementById("banList");
+        tbody.innerHTML = "";
+        bans.forEach(ban => {
+          const row = `<tr>
+            <td>${ban.banID}</td>
+            <td>${ban.reason}</td>
+            <td>${ban.discordID}</td>
+            <td><button onclick="unban('${ban.banID}')">Unban</button></td>
+          </tr>`;
+          tbody.innerHTML += row;
+        });
+      }
+    });
+
+    function unban(banID) {
+    pendingBanID = banID;
+    document.getElementById("confirmMessage").innerHTML = `This feature is availabe only in <span style="color: red; font-weight: bold;">Nexus Infinity!</span>`;
+    document.getElementById("confirmModal").style.display = "flex";
+    }
+
+    document.getElementById("confirmYes").addEventListener("click", () => {
+      fetch(`https://${GetParentResourceName()}/getBans`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({})
+      });
+
+      document.getElementById("confirmModal").style.display = "none";
+      pendingBanID = null;
+    });
+
+    function closePanel() {
+      body.classList.remove("fade-in");
+      body.classList.add("fade-out");
+
+      setTimeout(() => {
+        body.style.display = "none";
+        body.classList.remove("fade-out");
+
+        fetch(`https://${GetParentResourceName()}/closePanel`, {
+          method: "POST",
+          body: JSON.stringify({})
+        });
+      }, 500); 
+    }
+
+    window.addEventListener("keydown", function(event) {
+      if (event.key === "Escape") {
+        closePanel();
+      }
+    });
+
+    function filterBans() {
+      const input = document.getElementById("searchInput");
+      const filter = input.value.toLowerCase();
+      const rows = document.querySelectorAll("#banList tr");
+
+      rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(filter) ? "" : "none";
+      });
+    }
+  </script>
+</body>
+</html>
