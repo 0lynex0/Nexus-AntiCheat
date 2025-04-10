@@ -1,6 +1,6 @@
 nexus.ServerID = "STABLE 1.0.8.2"
 
-f nexus.Framework == "QBCore" then 
+if nexus.Framework == "QBCore" then 
     QBCore = exports['qb-core']:GetCoreObject()
 end
 
