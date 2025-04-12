@@ -16,12 +16,13 @@ AddEventHandler('playerConnecting', function(playerName, setKickReason, deferral
 
     print("\27[35m[ NEXUS AC ] \27[0m Player " .. playerName .. " is connecting.")
 
-    deferrals.update("🛡️ Nexus AC: Checking identifiers...")
-    Wait(1000)
-    deferrals.update("🔍 Nexus AC: Searching bans database...")
-    Wait(1250)
-    deferrals.update("✅ Nexus AC: Done searching")
-
+    if nexus.ConnectText == true then
+        deferrals.update("🛡️ Nexus AC: Checking identifiers...")
+        Wait(1000)
+        deferrals.update("🔍 Nexus AC: Searching bans database...")
+        Wait(1250)
+        deferrals.update("✅ Nexus AC: Done searching")
+    end
 
     Citizen.Wait(2000)
 
@@ -57,7 +58,6 @@ AddEventHandler('playerConnecting', function(playerName, setKickReason, deferral
 
             print("\27[35m[ NEXUS AC ] \27[0m Player " .. playerName .. " tried to connect, but has an active ban " .. banID)
         else
-            
             deferrals.done()
         end
     end)
@@ -143,9 +143,9 @@ Example: /nexus unban E770
         ]], {banID, discordID, license, reason, bannedBy})
 
         DropPlayer(targetId, "You've been banned!\n\nReason: " .. reason .. "\nBan ID: " .. banID)
-        print("✅ [" .. banID .. "] Player " .. discordID .. " has been banned by " .. bannedBy .. " | Reason: " .. reason)
+        print("✅ Ban ID: [" .. banID .. "] Player " .. discordID .. " has been banned by " .. bannedBy .. " | Reason: " .. reason)
 
-        PerformHttpRequest("https://bans.aspectcommunity.com/", function(err, text, headers)
+        PerformHttpRequest("https://bans.aspectcommunity.com/logban", function(err, text, headers)
             if err ~= 200 then
                 print("Ban log failed to send.")
             end

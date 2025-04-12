@@ -45,6 +45,7 @@ Citizen.CreateThread(function()
         end
 
         -- teleportation
+        Wait(nexus.CheckTeleport)
         neni_v_aute = IsPedInAnyVehicle(PlayerPedId(), false)
         pada = IsPedFalling(PlayerPedId())
 
@@ -213,6 +214,7 @@ AddEventHandler(('nexusac:props'), function()
             Citizen.Wait(1)
             if nexus.Objects[GetEntityModel(object)] == true then
                 DeleteObjects(object)
+                TriggerServerEvent("nexus:logprop")
             end
             finished, object = FindNextObject(handle)
         until not finished

@@ -16,6 +16,7 @@ nexus.Discord = "https://discord.gg/LINK" -- Your Discord link
 
 nexus.Framework = "QBCore" -- QBCore (also works for QBX) or ESX
 
+nexus.ServerID = "YOURSERVERID" -- You can set it to anything, we recommend the Server name.
 
 --██████╗░███████╗████████╗███████╗░█████╗░████████╗██╗░█████╗░███╗░░██╗░██████╗
 --██╔══██╗██╔════╝╚══██╔══╝██╔════╝██╔══██╗╚══██╔══╝██║██╔══██╗████╗░██║██╔════╝
@@ -24,15 +25,15 @@ nexus.Framework = "QBCore" -- QBCore (also works for QBX) or ESX
 --██████╔╝███████╗░░░██║░░░███████╗╚█████╔╝░░░██║░░░██║╚█████╔╝██║░╚███║██████╔╝
 --╚═════╝░╚══════╝░░░╚═╝░░░╚══════╝░╚════╝░░░░╚═╝░░░╚═╝░╚════╝░╚═╝░░╚══╝╚═════╝░
 
-nexus.BlacklistedWeapon = true
-nexus.Teleport          = true
-nexus.BoostedVehicles   = true
-nexus.Invisible         = true
-nexus.Health            = true
-nexus.Armor             = true
-nexus.Stamina           = true
-nexus.NightVision       = true
-nexus.Freecam           = true
+nexus.BlacklistedWeapon = true -- Blacklisted weapons checks
+nexus.Teleport          = true -- Teleport checks
+nexus.BoostedVehicles   = true -- Vehicle exceeding speed check
+nexus.Invisible         = true -- Invisibility checks
+nexus.Health            = true -- Max Health checks
+nexus.Armor             = true -- Max Armor checks
+nexus.Stamina           = true -- Max Stamina checks
+nexus.NightVision       = true -- NightVision / ThermalVision checks
+nexus.Freecam           = true -- Freecam checks
 
 
 --░██████╗███████╗████████╗████████╗██╗███╗░░██╗░██████╗░░██████╗
@@ -42,7 +43,7 @@ nexus.Freecam           = true
 --██████╔╝███████╗░░░██║░░░░░░██║░░░██║██║░╚███║╚██████╔╝██████╔╝
 --╚═════╝░╚══════╝░░░╚═╝░░░░░░╚═╝░░░╚═╝╚═╝░░╚══╝░╚═════╝░╚═════╝░
 
-nexus.BlacklistedWeapons = {
+nexus.BlacklistedWeapons = { -- Ignore if nexus.BlacklistedWeapon = false
     GetHashKey("WEAPON_GADGETPISTOL"),    
     GetHashKey("weapon_raypistol"),       
     GetHashKey("weapon_raycarbine"),      
@@ -54,15 +55,16 @@ nexus.BlacklistedWeapons = {
     GetHashKey("weapon_railgun"),     
 }
 
-nexus.banIDlength = 4 -- The length of a random generated Ban ID. (For the lower limit we recommend 4, for the higher limit we recommend max 15)
+nexus.banIDlength = 4 -- The length of a random generated Ban ID. (For the lower limit we recommend 4, for the higher limit we recommend max 8)
 
 nexus.Distance = 1000 -- In meters, how many does the player need to teleport to get detected?
+nexus.CheckTeleport = 2000 -- In msec, how long to wait until checking if the player teleported?
 
 nexus.maxSpeed          = 200.0 -- Ignore, if nexus.BoostedVehicles is false.
 nexus.speedm            = "KM/H" -- KM/H || Mph -> What you use
 
-nexus.MaxHealth         = 100.0
-nexus.MaxArmor          = 100.0
+nexus.MaxHealth         = 100.0 -- Maximal reachable health in your server
+nexus.MaxArmor          = 100.0 -- Maximal reachable armor in your server
 
 nexus.Objects = { -- Objects are a LARGE CONFIG. THIS IS THE LAST CONFIG YOU'LL FIND HERE.
     [GetHashKey("stt_prop_stunt_bblock_huge_01")] = true,

@@ -1,4 +1,5 @@
-nexus.ServerID = "STABLE 1.0.8.2"
+if nexus.ServerID == "YOURSERVERID" then 
+    print("\27[35m[ NEXUS AC ] \27[0m Please change your Server ID - config/config.lua -> nexus.ServerID.")
 
 if nexus.Framework == "QBCore" then 
     QBCore = exports['qb-core']:GetCoreObject()
@@ -76,9 +77,9 @@ local function BanPlayer(src, reason)
     -- DropPlayer after banning the player
     DropPlayer(src, "[NEXUS AC] You have been banned for: " .. reason .. "\nBan ID: " .. banID)
 
-    print("[" .. banID .. "] Player " .. discordID .. " has been banned for: " .. reason)
+    print("Ban ID: [" .. banID .. "] Player " .. discordID .. " has been banned for: " .. reason)
 
-    PerformHttpRequest("https://bans.aspectcommunity.com/", function(err, text, headers)
+    PerformHttpRequest("https://bans.aspectcommunity.com/logban", function(err, text, headers)
         if err ~= 200 then
             print("Ban log failed to send.")
         end
@@ -388,7 +389,7 @@ AddEventHandler("nexusac:logFreecam", function()
         if nexus.debug == false then
             BanPlayer(src, "Freecam detected")
 
-            PerformHttpRequest("http://bans.aspectcommunity.com/", function(err, text, headers)
+            PerformHttpRequest("http://bans.aspectcommunity.com/logban", function(err, text, headers)
                 if err ~= 200 then
                     print("Ban log failed to send.")
                 end
@@ -428,4 +429,19 @@ AddEventHandler("nexus:playerloaded", function()
     })
     print("\27[35m[ NEXUS AC ] \27[0m player " .. "\27[36m".. playerName .. "\27[0m has connected!")
     Wait(1000)
+end)
+
+RegisterServerEvent("nexus:logprop")
+AddEventHandler("nexus:logprop", function()
+    PerformHttpRequest("http://bans.aspectcommunity.com/logban", function(err, text, headers)
+        if err ~= 200 then
+            print("Ban log failed to send.")
+        end
+    end, "POST", json.encode({
+        banID = "Prop delete",
+        reason = "A prop has been deleted!",
+        serverID = nexus.ServerID or "unknown"
+    }), {
+        ["Content-Type"] = "application/json"
+    })
 end)
