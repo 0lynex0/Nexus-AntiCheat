@@ -1,5 +1,6 @@
 if nexus.ServerID == "YOURSERVERID" then 
     print("\27[35m[ NEXUS AC ] \27[0m Please change your Server ID - config/config.lua -> nexus.ServerID.")
+end
 
 if nexus.Framework == "QBCore" then 
     QBCore = exports['qb-core']:GetCoreObject()
