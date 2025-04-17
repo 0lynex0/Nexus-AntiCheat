@@ -101,7 +101,11 @@ AddEventHandler("nexusac:checkWeapons", function(weapon)
         print("\27[35m[ NEXUS AC ] \27[0m Anticheat has started a WEAPON check")
     end
 
-    local src = source 
+    local src = source
+
+    if isAdmin(src) then
+        return  -- Skip the check if the player is an admin
+    end
 
     if nexus.Framework == "QBCore" then 
         local Player = QBCore.Functions.GetPlayer(src)
@@ -112,10 +116,6 @@ AddEventHandler("nexusac:checkWeapons", function(weapon)
 
     local playerName = GetPlayerName(src)
     local PlayerId = src
-
-    if isAdmin(src) then
-        return  -- Skip the check if the player is an admin
-    end
 
     if Player then
         for _, blacklisted in pairs(blacklistedWeapons) do

@@ -3,7 +3,7 @@ fx_version "cerulean"
 game "gta5"
 author "Phoenix"
 description "Free FiveM Anticheat"
-version "1.0.8.2"
+version "1.0.8.3"
 
 shared_scripts {
     "config/config.lua",
