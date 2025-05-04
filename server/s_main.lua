@@ -147,12 +147,14 @@ AddEventHandler("nexusac:checkCoords", function(coords, neni_v_aute, pada)
     end
 
     local src = source
-    local playerName = GetPlayerName(src)
-    local PlayerId = src
 
     if isAdmin(src) then
         return  -- Skip the check if the player is an admin
     end
+
+    local playerName = GetPlayerName(src)
+    local PlayerId = src
+
 
     if not playerData[src] then 
         playerData[src] = { lastCoords = coords, lastCheck = os.time() }
@@ -198,13 +200,14 @@ AddEventHandler('nexusac:checkSpeed', function(speed)
         print("\27[35m[ NEXUS AC ] \27[0m Anticheat has started a SPEED check")
     end
     local src = source
-    local playerName = GetPlayerName(src)
-    local PlayerId = src
-    local maxSpeed = nexus.maxSpeed -- Maximální normální rychlost
 
     if isAdmin(src) then
         return  -- Skip the check if the player is an admin
     end
+
+    local playerName = GetPlayerName(src)
+    local PlayerId = src
+    local maxSpeed = nexus.maxSpeed -- Maximální normální rychlost
 
     if speed > maxSpeed then
         if nexus.debug == true then 
