@@ -14,7 +14,7 @@ Citizen.CreateThread(function()
         
         AddEventHandler(nexus.PL, function()
             if nexus.debug == true then
-                print("✅ ", "Heartbeat from playerload has been accepted")
+                print("A player has loaded.")
             end
 
             TriggerServerEvent("nexus:playerloaded")
@@ -109,6 +109,12 @@ Citizen.CreateThread(function()
         TriggerEvent('nexusac:props')
         if nexus.debug == true then 
             print("[ NEXUS AC ] AC is checking for props in the whole map.")
+        end
+        -- hb
+        local hb = true
+        TriggerServerEvent('nexusac:hbuu', hb)
+        if nexus.debug == true then 
+            print("[ NEXUS AC ] AC is checking hb")
         end
     end
 end)
@@ -236,3 +242,9 @@ function DeleteObjects(object)
 		DeleteEntity(object)
 	end
 end
+
+RegisterNetEvent('nexusac:heartbeat', function()
+    Wait(1000)
+    hb = true
+    TriggerEvent("nexusac:gothb", hb)
+end)

@@ -18,6 +18,8 @@ nexus.Framework = "QBCore" -- QBCore (also works for QBX) or ESX
 
 nexus.ServerID = "YOURSERVERID" -- You can set it to anything, we recommend the Server name.
 
+nexus.ConnectText = true -- Text on connecting card
+
 --██████╗░███████╗████████╗███████╗░█████╗░████████╗██╗░█████╗░███╗░░██╗░██████╗
 --██╔══██╗██╔════╝╚══██╔══╝██╔════╝██╔══██╗╚══██╔══╝██║██╔══██╗████╗░██║██╔════╝
 --██║░░██║█████╗░░░░░██║░░░█████╗░░██║░░╚═╝░░░██║░░░██║██║░░██║██╔██╗██║╚█████╗░
@@ -34,6 +36,7 @@ nexus.Armor             = true -- Max Armor checks
 nexus.Stamina           = true -- Max Stamina checks
 nexus.NightVision       = true -- NightVision / ThermalVision checks
 nexus.Freecam           = true -- Freecam checks
+nexus.Heartbeat			= true -- heartbeat option
 
 
 --░██████╗███████╗████████╗████████╗██╗███╗░░██╗░██████╗░░██████╗
@@ -56,6 +59,7 @@ nexus.BlacklistedWeapons = { -- Ignore if nexus.BlacklistedWeapon = false
 }
 
 nexus.banIDlength = 4 -- The length of a random generated Ban ID. (For the lower limit we recommend 4, for the higher limit we recommend max 8)
+nexus.heartbeattimeout = 5000 -- In msec, how often to check heartbeat
 
 nexus.Distance = 1000 -- In meters, how many does the player need to teleport to get detected?
 nexus.CheckTeleport = 2000 -- In msec, how long to wait until checking if the player teleported?

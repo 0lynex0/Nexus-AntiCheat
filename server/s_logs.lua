@@ -51,6 +51,7 @@ exports["nexus_anticheat"]:SendLog("detection",{
 
 
 AddEventHandler("onResourceStart",function(r)
+    Wait(8000)
     if r == GetCurrentResourceName() then
         print("")
         print([[
@@ -61,7 +62,7 @@ AddEventHandler("onResourceStart",function(r)
             ██║░╚███║███████╗██╔╝╚██╗╚██████╔╝██████╔╝  ██║░░██║╚█████╔╝
             ╚═╝░░╚══╝╚══════╝╚═╝░░╚═╝░╚═════╝░╚═════╝░  ╚═╝░░╚═╝░╚════╝░
 
-                                Version 1.0.8.4
+                                Version 1.0.8.5
 
             ]])
         print("                                                                                      ")

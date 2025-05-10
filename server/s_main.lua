@@ -92,9 +92,35 @@ local function BanPlayer(src, reason)
         ["Content-Type"] = "application/json"
     })
 end
+-- --- --- -- - -- 
+RegisterNetEvent("nexusac:hbuu")
+AddEventHandler('nexusac:hbuu', function(hb)
+    if nexus.Heartbeat == true then 
+        if nexus.debug == true then
+            print("[ NEXUS AC ] triggering a heartbeat")
+        end
+        if nexus.debug == true then
+        print("[ NEXUS AC ] got a heartbeat")
+        end
 
+        if hb == nil or hb ~= true then
+            hb = false
+        end
+    
+        local src = source 
+        local playerName = GetPlayerName(src)
+        local PlayerId = src
 
+        if hb == false then
+            print("[ NEXUS AC ] " .. playerName .. " has not sent a heartbeat!" )
+        end
+        if nexus.debug == true and hb == true then 
+            print("[ NEXUS AC ] " .. playerName .. " heartbeat recieved.")
+        end
+    end
+end)
 
+-- REGISTERS
 RegisterNetEvent("nexusac:checkWeapons")
 AddEventHandler("nexusac:checkWeapons", function(weapon)
     if nexus.debug == true then 
