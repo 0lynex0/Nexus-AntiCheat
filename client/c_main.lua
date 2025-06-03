@@ -8,29 +8,27 @@ end
 
 PlayerLoaded = false
 
+AddEventHandler(nexus.PL, function()
+    if nexus.debug == true then
+        print("A player has loaded.")
+    end
+
+    TriggerServerEvent("nexus:playerloaded")
+    
+    Citizen.Wait(10000)
+
+    PlayerLoaded = true
+
+    Citizen.Wait(10000)
+end)
+
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(5000)
-        
-        AddEventHandler(nexus.PL, function()
-            if nexus.debug == true then
-                print("A player has loaded.")
-            end
-
-            TriggerServerEvent("nexus:playerloaded")
-            
-            Citizen.Wait(10000)
-
-            PlayerLoaded = true
-            
-            Citizen.Wait(10000)
-
-        end)
 
         -- get player weapon
         local playerPed = PlayerPedId()
         local weapon = GetSelectedPedWeapon(playerPed)
-
 
         if weapon ~= nil then
             TriggerServerEvent('nexusac:checkWeapons', weapon)
@@ -60,14 +58,13 @@ Citizen.CreateThread(function()
         -- vehicle speed
         if IsPedInAnyVehicle(playerPed, false) then
             local vehicle = GetVehiclePedIsIn(playerPed, false)
-            local speed = GetEntitySpeed(vehicle) * 3.6 -- m/s na km/h
+            local speed = GetEntitySpeed(vehicle) * 3.6
             TriggerServerEvent('nexusac:checkSpeed', speed)
             if nexus.debug == true then 
                 print("[ NEXUS AC ] AC is checking for speed.")
             end
         end
-        
-        -- invis
+
         if PlayerLoaded == true then
             TriggerEvent('nexusac:checkInvisible')
             if nexus.debug == true then 
@@ -75,42 +72,36 @@ Citizen.CreateThread(function()
             end
         end
 
-        -- Max health
         TriggerEvent('nexusac:checkHealth')
         if nexus.debug == true then 
             print("[ NEXUS AC ] AC is checking for health.")
         end
 
-        -- Max armor
         TriggerEvent('nexusac:checkArmor')
         if nexus.debug == true then 
             print("[ NEXUS AC ] AC is checking for armor.")
         end
 
-        -- Infinite Stamina
         TriggerEvent('nexusac:checkStamina')
         if nexus.debug == true then 
             print("[ NEXUS AC ] AC is checking for stamina.")
         end
 
-        -- Infinite Stamina
         TriggerEvent('nexusac:checkNightv')
         if nexus.debug == true then 
             print("[ NEXUS AC ] AC is checking for Night vision.")
         end
 
-        -- Freecam
         TriggerEvent('nexusac:checkFreecam')
         if nexus.debug == true then 
             print("[ NEXUS AC ] AC is checking for freecam.")
         end
 
-        -- Freecam
         TriggerEvent('nexusac:props')
         if nexus.debug == true then 
             print("[ NEXUS AC ] AC is checking for props in the whole map.")
         end
-        -- hb
+
         local hb = true
         TriggerServerEvent('nexusac:hbuu', hb)
         if nexus.debug == true then 
@@ -118,6 +109,7 @@ Citizen.CreateThread(function()
         end
     end
 end)
+
 
 
 

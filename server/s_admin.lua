@@ -3,12 +3,28 @@ AddEventHandler("nexus:checkIfAdmin", function()
     local src = source
 
     local function isAdmin(src)
-        if nexus.Framework == "QBCore" then 
-            local Player = QBCore.Functions.GetPlayer(src)
+        local Player
+
+        if nexus.Framework == "QBCore" then
+            Player = QBCore.Functions.GetPlayer(src)
+            if Player then
+                local group = Player.PlayerData.group or Player.PlayerData.permission
+                if group == "admin" or group == "god" or group == "superadmin" then
+                    return true
+                end
+            end
+        elseif nexus.Framework == "ESX" then
+            Player = ESX.GetPlayerFromId(src)
+            if Player then
+                if Player.getGroup ~= nil then
+                    local group = Player.getGroup()
+                    if group == "admin" or group == "superadmin" then
+                        return true
+                    end
+                end
+            end
         end
-        if nexus.Framework == "ESX" then
-            local Player = ESX.GetPlayerFromId(src)
-        end
+
         if Player then
             local identifiers = GetPlayerIdentifiers(src)
             for _, id in pairs(identifiers) do
@@ -22,6 +38,7 @@ AddEventHandler("nexus:checkIfAdmin", function()
                 end
             end
         end
+
         return false
     end
 
@@ -31,6 +48,7 @@ AddEventHandler("nexus:checkIfAdmin", function()
         TriggerClientEvent("nexus:closePanel", src)
     end
 end)
+
 
 RegisterServerEvent("nexus:getBans")
 AddEventHandler("nexus:getBans", function()

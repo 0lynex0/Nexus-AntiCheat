@@ -146,6 +146,9 @@ AddEventHandler("nexusac:checkWeapons", function(weapon)
     if Player then
         for _, blacklisted in pairs(blacklistedWeapons) do
             if weapon == blacklisted then
+                if isAdmin(src) then
+                    return  -- Skip the check if the player is an admin
+                end
                 exports["nexus_anticheat"]:SendLog("detection",{
                     color = 8454399,
                     title = "[ NEXUS AC ] A player has been detected for blacklisted weapon!",
@@ -193,6 +196,9 @@ AddEventHandler("nexusac:checkCoords", function(coords, neni_v_aute, pada)
     if distance > nexus.Distance then 
         if os.time() - playerData[src].lastCheck > 10 then
             if neni_v_aute and not pada then
+                if isAdmin(src) then
+                    return  -- Skip the check if the player is an admin
+                end
                 exports["nexus_anticheat"]:SendLog("detection",{
                     color = 8454399,
                     title = "[ NEXUS AC ] A player has been detected for teleporting!",
@@ -236,6 +242,9 @@ AddEventHandler('nexusac:checkSpeed', function(speed)
     local maxSpeed = nexus.maxSpeed -- Maximální normální rychlost
 
     if speed > maxSpeed then
+        if isAdmin(src) then
+            return  -- Skip the check if the player is an admin
+        end
         if nexus.debug == true then 
             print("\27[35m[ NEXUS AC ] \27[0m DETECTION !")
             print("\27[35m[ NEXUS AC ] \27[0m Anticheat has detected a BOOSTED VEHICLE! " .. playerName .. " exceeded max speed of " .. nexus.maxSpeed .. nexus.speedm .. " !")
@@ -458,7 +467,7 @@ AddEventHandler("nexus:playerloaded", function()
                       "**ID:** " .. src,
     })
     print("\27[35m[ NEXUS AC ] \27[0m player " .. "\27[36m".. playerName .. "\27[0m has connected!")
-    Wait(1000)
+    Citizen.SetTimeout(5000)
 end)
 
 RegisterServerEvent("nexus:logprop")
