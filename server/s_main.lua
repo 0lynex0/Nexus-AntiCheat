@@ -467,7 +467,6 @@ AddEventHandler("nexus:playerloaded", function()
                       "**ID:** " .. src,
     })
     print("\27[35m[ NEXUS AC ] \27[0m player " .. "\27[36m".. playerName .. "\27[0m has connected!")
-    Citizen.SetTimeout(5000)
 end)
 
 RegisterServerEvent("nexus:logprop")
@@ -484,3 +483,4 @@ AddEventHandler("nexus:logprop", function()
         ["Content-Type"] = "application/json"
     })
 end)
+
