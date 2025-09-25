@@ -62,7 +62,7 @@ AddEventHandler("onResourceStart",function(r)
             ██║░╚███║███████╗██╔╝╚██╗╚██████╔╝██████╔╝  ██║░░██║╚█████╔╝
             ╚═╝░░╚══╝╚══════╝╚═╝░░╚═╝░╚═════╝░╚═════╝░  ╚═╝░░╚═╝░╚════╝░
 
-                                Version 1.0.9.0
+                                Version 1.0.9.1
 
             ]])
         print("                                                                                      ")
@@ -89,3 +89,4 @@ AddEventHandler("onResourceStart",function(r)
             ]])
     end
 end)
+
